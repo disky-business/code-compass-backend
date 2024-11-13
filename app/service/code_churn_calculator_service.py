@@ -13,14 +13,18 @@ class CodeChurnCalculatorService:
         return round((math.exp(-self.DECAY_FACTOR * commit_count)) * 100, 2)
 
     @staticmethod
-    def _get_code_churn_report_for_file_path(file_path: str, github_client_service: GithubClientService):
+    def _get_code_churn_report_for_file_path(
+        file_path: str, github_client_service: GithubClientService
+    ):
         logger.debug(f"Gettnig code churn report for {file_path}...")
         file_path_contents = github_client_service.get_file_path_contents(file_path)
         code_churn_report = []
         for file_path_content in file_path_contents:
             if file_path_content.type == "dir":
-                children_code_churn_report = CodeChurnCalculatorService._get_code_churn_report_for_file_path(
-                    file_path_content.path, github_client_service
+                children_code_churn_report = (
+                    CodeChurnCalculatorService._get_code_churn_report_for_file_path(
+                        file_path_content.path, github_client_service
+                    )
                 )
                 code_churn_report.append(
                     {
@@ -42,13 +46,16 @@ class CodeChurnCalculatorService:
                     }
                 )
         return code_churn_report
-    
+
     @staticmethod
-    def calculate_code_churn_for_repository(user_name: str, repo_name: str, branch_name: str = "main"):
+    def calculate_code_churn_for_repository(
+        user_name: str, repo_name: str, branch_name: str = "main"
+    ):
         logger.info(f"Calculating code churn for {repo_name}...")
-        github_client_service = GithubClientService(
-            user_name, repo_name, branch_name
+        github_client_service = GithubClientService(user_name, repo_name, branch_name)
+        code_churn_report = (
+            CodeChurnCalculatorService._get_code_churn_report_for_file_path(
+                "", github_client_service
+            )
         )
-        code_churn_report = CodeChurnCalculatorService._get_code_churn_report_for_file_path("", github_client_service)
         return code_churn_report
-        

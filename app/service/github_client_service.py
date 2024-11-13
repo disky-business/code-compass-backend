@@ -2,6 +2,7 @@ from github import Github
 
 from app.config import GITHUB_AUTH_TOKEN
 
+
 class GithubClientService:
     def __init__(self, user_name: str, repo_name: str, branch_name: str):
         self.token = GITHUB_AUTH_TOKEN
