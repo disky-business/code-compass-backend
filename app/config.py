@@ -1,7 +1,6 @@
 import os
 from dotenv import load_dotenv
 
-from app.logger import logger
 
 load_dotenv()
 
