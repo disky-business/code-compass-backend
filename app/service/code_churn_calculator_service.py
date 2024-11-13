@@ -9,10 +9,10 @@ class CodeChurnCalculatorService:
 
     @classmethod
     def _calculate_code_churn_for_file(
-        self, file_path: str, github_client_service: GithubClientService
+        cls, file_path: str, github_client_service: GithubClientService
     ):
         commit_count = github_client_service.get_commit_count(file_path)
-        return round((math.exp(-self.DECAY_FACTOR * commit_count)) * 100, 2)
+        return round((math.exp(-cls.DECAY_FACTOR * commit_count)) * 100, 2)
 
     @staticmethod
     def _get_code_churn_report_for_file_path(
