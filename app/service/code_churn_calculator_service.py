@@ -42,7 +42,7 @@ class CodeChurnCalculatorService:
                         "fileName": file_path_content.name,
                         "fileType": "file",
                         "filePath": file_path_content.path,
-                        "codeChurnScore": CodeChurnCalculatorService.calculate_code_churn_for_file(
+                        "codeChurnScore": CodeChurnCalculatorService._calculate_code_churn_for_file(
                             file_path_content.path, github_client_service
                         ),
                     }
