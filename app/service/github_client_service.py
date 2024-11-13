@@ -27,18 +27,18 @@ class GithubClientService:
                 children_content = self.calculate_churn(content.path)
                 file_tree.append(
                     {
-                        "name": content.name,
-                        "type": "dir",
-                        "path": content.path,
+                        "fileName": content.name,
+                        "fileType": "dir",
+                        "filePath": content.path,
                         "children": children_content.result(),
                     }
                 )
             else:
                 file_tree.append(
                     {
-                        "name": content.name,
-                        "type": "file",
-                        "path": content.path,
+                        "fileName": content.name,
+                        "fileType": "file",
+                        "filePath": content.path,
                         "codeChurnScore": CodeChurnCalculatorService.calculate_code_churn_for_file(
                             content.path, self
                         ),
