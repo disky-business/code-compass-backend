@@ -11,6 +11,7 @@ class GithubClientService:
 
     def __init__(self, repo_link: str, branch_name: str):
         self.token = GITHUB_AUTH_TOKEN
+        logger.info(f">>>>> token : {self.token}")
         self.github_client = Github(self.token)
         self.branch_name = branch_name
         self.repo = self.github_client.get_repo(repo_link)

@@ -3,10 +3,6 @@ from dotenv import load_dotenv
 
 from app.logger import logger
 
-GITHUB_AUTH_TOKEN = ""
+load_dotenv()
 
-def load_environment():
-    load_dotenv()
-    global GITHUB_AUTH_TOKEN
-    GITHUB_AUTH_TOKEN = os.getenv("GITHUB_AUTH_TOKEN", "")
-    
+GITHUB_AUTH_TOKEN = os.getenv("GITHUB_AUTH_TOKEN", "")
