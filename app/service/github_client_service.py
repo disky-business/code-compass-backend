@@ -9,19 +9,18 @@ from app.service.code_churn_calculator_service import CodeChurnCalculatorService
 class GithubClientService:
     _thread_pool_executor = ThreadPoolExecutor(max_workers=100)
 
-    def __init__(self, repo_link: str, branch_name: str):
+    def __init__(self, user_name: str, repo_name: str, branch_name: str):
         self.token = GITHUB_AUTH_TOKEN
-        logger.info(f">>>>> token : {self.token}")
         self.github_client = Github(self.token)
         self.branch_name = branch_name
-        self.repo = self.github_client.get_repo(repo_link)
+        self.repository = self.github_client.get_repo(f"{user_name}/{repo_name}")
 
     def get_commit_count(self, file_path):
-        return self.repo.get_commits(path=file_path).totalCount
+        return self.repository.get_commits(path=file_path).totalCount
 
     def calculate_churn(self, file_path: str):
         logger.info(f"Getting contents for path : {file_path}...")
-        contents = self.repo.get_contents(file_path, ref=self.branch_name)
+        contents = self.repository.get_contents(file_path, ref=self.branch_name)
         file_tree = []
         for content in contents:
             if content.type == "dir":
@@ -48,8 +47,8 @@ class GithubClientService:
         return file_tree
 
     def get_repo_churn(self):
-        logger.info(f"Getting contents for {self.repo.full_name}...")
+        logger.info(f"Getting contents for {self.repository.full_name}...")
         repo_churn_tree_dict = self.calculate_churn("")
-        logger.info(f"Contents for {self.repo.full_name} retrieved successfully.")
+        logger.info(f"Contents for {self.repository.full_name} retrieved successfully.")
         logger.info(f"Contents : {repo_churn_tree_dict}")
         return repo_churn_tree_dict

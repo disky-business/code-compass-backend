@@ -12,7 +12,7 @@ router = APIRouter()
 async def calculate_code_churn(json_request: UploadRequestBody):
     logger.info("Uploading repo...")
     github_client_service = GithubClientService(
-        json_request.repo_link, json_request.branch_name
+        json_request.user_name, json_request.repo_name, json_request.branch_name
     )
     commits_history_list = github_client_service.calculate_churn("")
     return {"fileChurnScores": commits_history_list}
