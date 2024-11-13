@@ -1,11 +1,8 @@
 from github import Github
-from concurrent.futures import ThreadPoolExecutor
 
 from app.config import GITHUB_AUTH_TOKEN
 
 class GithubClientService:
-    _thread_pool_executor = ThreadPoolExecutor(max_workers=100)
-
     def __init__(self, user_name: str, repo_name: str, branch_name: str):
         self.token = GITHUB_AUTH_TOKEN
         self.github_client = Github(self.token)
