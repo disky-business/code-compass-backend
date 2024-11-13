@@ -11,7 +11,9 @@ class GithubClientService:
         self.repository = self.github_client.get_repo(f"{user_name}/{repo_name}")
 
     def get_commit_count(self, file_path):
-        return self.repository.get_commits(path=file_path).totalCount
+        return self.repository.get_commits(
+            sha=self.branch_name, path=file_path
+        ).totalCount
 
     def get_file_path_contents(self, file_path):
         return self.repository.get_contents(file_path, ref=self.branch_name)
