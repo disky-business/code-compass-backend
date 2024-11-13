@@ -9,4 +9,5 @@ def start_application() -> FastAPI:
     app.include_router(router)
     return app
 
+
 app = start_application()
